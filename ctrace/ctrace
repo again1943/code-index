@@ -1,0 +1,27 @@
+#!/bin/sh
+
+scriptDir() {
+    path=$0
+    while test -L "$path"; do
+        cd "$(dirname "$path")" || exit 1
+        path=$(readlink "$(basename "$path")")
+    done
+    cd "$(dirname "$path")" && pwd
+}
+
+bin_dir=$(scriptDir)
+libexec_dir=$bin_dir
+COMPILE_COMMANDS_JSON=$PWD/compile_commands.json
+export COMPILE_COMMANDS_JSON
+
+preload_lib=$libexec_dir/libctrace.so
+LD_PRELOAD=$preload_lib${LD_PRELOAD:+ $LD_PRELOAD}
+export LD_PRELOAD
+
+echo "[" > ${COMPILE_COMMANDS_JSON}
+
+"$@"
+
+sed '$ s/.$//' ${COMPILE_COMMANDS_JSON} > ${COMPILE_COMMANDS_JSON}.bak
+mv ${COMPILE_COMMANDS_JSON}.bak ${COMPILE_COMMANDS_JSON}
+echo "]" >> ${COMPILE_COMMANDS_JSON}
