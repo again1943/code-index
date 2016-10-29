@@ -59,19 +59,19 @@ bool CompileCommandRecorder::markCompileCommandFound() {
 }
 
 bool CompileCommandRecorder::recordCompileCommand(int argc, char** argv, char* source) {
-		const char* file = getenv(kEnvCompileCommandsJson_);
-		assert(file != nullptr && file[0] != '\0');
+    const char* file = getenv(kEnvCompileCommandsJson_);
+    assert(file != nullptr && file[0] != '\0');
 
     FILE *stream = fopen(file, "a");
     assert(stream != nullptr);
 
-		{
-			FileLock lock(fileno(stream));
-			std::lock_guard<FileLock> guard(lock);
-			logCompileCommand(stream, argc, argv, source);
-    	fflush(stream);
-		}
-		fclose(stream);
+    {
+      FileLock lock(fileno(stream));
+      std::lock_guard<FileLock> guard(lock);
+      logCompileCommand(stream, argc, argv, source);
+      fflush(stream);
+    }
+    fclose(stream);
 }
 
 bool CompileCommandRecorder::logCompileCommand(FILE* stream, int argc, char** argv, char* source) {

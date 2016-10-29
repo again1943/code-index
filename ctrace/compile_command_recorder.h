@@ -31,7 +31,7 @@ private:
   void putc(FILE* stream, char ch);
 private:
   static constexpr const char* kEnvDoesParentFindCompileCommand_ = "FOUND_COMPILE_COMMAND";
-	static constexpr const char* kEnvCompileCommandsJson_ = "COMPILE_COMMANDS_JSON";
+  static constexpr const char* kEnvCompileCommandsJson_ = "COMPILE_COMMANDS_JSON";
   static constexpr const char kPathDelimiter_ = '/';
 private:
   const std::vector<std::string> kSourceExtensions_;
