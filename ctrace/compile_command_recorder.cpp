@@ -13,7 +13,7 @@ namespace ctrace {
 CompileCommandRecorder::CompileCommandRecorder() :
         kSourceExtensions_({".s", ".c", ".cc", ".cpp", ".cxx", ".c++"}),
         kDrivers_({"cc", "c++", "gcc", "g++", "clang", "clang++"}),
-        kExcludedDrivers_({"cc1plus"})
+        kExcludedDrivers_({"cc1plus", "cc1"})
         {}
 
 bool CompileCommandRecorder::isCompileCommand(const char* executableFilePath) {
